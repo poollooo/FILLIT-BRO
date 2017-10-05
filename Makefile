@@ -6,11 +6,11 @@
 #    By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/04 18:26:07 by pnizet            #+#    #+#              #
-#    Updated: 2017/10/04 19:26:57 by pnizet           ###   ########.fr        #
+#    Updated: 2017/10/04 19:34:02 by pnizet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fillit 
+NAME = fillit
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
 

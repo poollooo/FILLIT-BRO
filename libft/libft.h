@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/19 15:42:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/09/29 15:36:11 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/05 15:30:52 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 # include <string.h>
+# include <stdio.h>
+# include <fcntl.h> C
 
 typedef struct		s_list
 {

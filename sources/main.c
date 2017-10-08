@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:26:13 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/05 17:19:55 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/06 15:00:28 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@ int		main(int argc, char **argv)
 {
 	t_list	*list;
 	t_list	*map;
+	int fd;
+	char *buf;
 
 	if (argc != 2)
 	{
@@ -39,15 +41,15 @@ int		main(int argc, char **argv)
 	{
 		ft_putstr("error\n");
 		return (1);
-	}
+	} 
 
 	/*
 	** We still need to figure out how we are going to solve this fucking problem.
 	*/
 
-	else if (read_tetriminos(open(argv[1]) != NULL)
-	{
-		
-	}
+	buf = (char *)malloc(22);
+	ft_bzero(buf, 22)
+	fd = open(argv[1], O_RDONLY);
+	read(fd, buf, 21);
 
 }

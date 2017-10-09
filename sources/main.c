@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:26:13 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/06 15:00:28 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/08 21:29:40 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@
 ** Main function, where we will use all our functions to solve the fillit
 ** problem.
 */
+
+struct t_map
+	{
+		int m_distance[196];
+		char m_letters[196];
+	};
+struct t_tetri
+	{
+		int numero;
+		char m_coord[4];
+	};
 
 int		main(int argc, char **argv)
 {
@@ -41,7 +52,7 @@ int		main(int argc, char **argv)
 	{
 		ft_putstr("error\n");
 		return (1);
-	} 
+	}
 
 	/*
 	** We still need to figure out how we are going to solve this fucking problem.

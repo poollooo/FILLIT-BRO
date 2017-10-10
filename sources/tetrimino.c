@@ -6,15 +6,11 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/08 21:17:34 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/10 12:31:11 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "fillit.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <fcntl.h>
-#include <unistd.h>
+#include "fillit.h"
 
 /*
 ** Verifie que les tetriminos ont une bonne shape general et verifie
@@ -91,7 +87,13 @@ int		check_last(char *str)
 
 }
 
-int main(int ac, char **av)
+
+/*
+** Change the main in a runable function to use in our Main.c
+**
+*/
+
+int c(int ac, char **av)
 {
 	int fd;
 	char *buf;

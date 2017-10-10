@@ -6,53 +6,70 @@
 #    By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/04 18:26:07 by pnizet            #+#    #+#              #
-#    Updated: 2017/10/04 19:34:02 by pnizet           ###   ########.fr        #
+#    Updated: 2017/10/09 17:51:35 by pnizet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = fillit
-CC = gcc
-CFLAGS = -Wall -Wextra -Werror
+CC				=	gcc
+NAME			=	fillit
+FLAGS			=	-Wall -Wextra -Werror
 
-SRCS = main.c \
-	map.c \
-	reader.c \
-	solver.c \
-	tetrimino.c
+LIB_PATH		=	libft
+LIB				=	$(LIB_PATH)/libft.a
+LIB_LINK		=	-L $(LIB_PATH) -lft
 
-OBJ = $(addprefix $(OBJDIR), $(SRC:.c=.o))
-INC = ./include/
+INC_DIR			=	include
+INCS			=	-I $(LIB_PATH)/$(INC_DIR) -I $(INC_DIR)
 
-LIBFT = ./libft/libft.a
-FTINC = -I ./libft/
-FTLINK = -L ./libft? -libf
+SRC_DIR			=	sources
+SRC_BASE		= main.c \
+					map.c \
+					reader.c \
+					solver.c\
+					tetrimino.c
 
-OBJDIR = ./obj/
-SRCDIR = ./src/
-INCDIR = ./includes/
+OBJ_DIR			=	obj
 
-.PHONY: all clean fclean re
+SRCS			=	$(addprefix $(SRC_DIR)/, $(SRC_BASE))
+OBJS			=	$(addprefix $(OBJ_DIR)/, $(SRC_BASE:.c=.o))
 
-all: obj libft$(NAME)
+# COLORS
+C_NO			=	"\033[00m"
+C_OK			=	"\033[35m"
+C_GOOD			=	"\033[32m"
+C_ERROR			=	"\033[31m"
+C_WARN			=	"\033[33m"
+
+# DBG MESSAGE
+SUCCESS			=	$(C_GOOD)SUCCESS$(C_NO)
+OK				=	$(C_OK)OK$(C_NO)
+
+all: obj $(NAME)
+
+$(NAME): $(LIB) $(OBJS)
+	@$(CC) $(FLAGS) -o $@ $^ $(LIB_LINK)
+	@echo "Compiling" [ $(NAME) ] $(SUCCESS)
+
+$(LIB):
+	@make -C $(LIB_PATH)
 
 obj:
-	mkdir -p $(OBJDIR)
+	@mkdir -p obj
 
-$(OBJDIR)%.o: $(SRCDIR)%.c
-		gcc $(CFLAGS) $(FTINC) -I $(INC) -c $< -o $@
-
-$(NAME): $(OBJ)
-	$(CC) $(OBJ) $(FTLINK) -o $(NAME)
-
-libft: $(LIBFT)
-
-$(LIBFT):
-		make -C ./libft/
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/*.h
+	@$(CC) $(FLAGS) $(INCS) -c -o $@ $<
+	@echo "Linking" [ $< ] $(OK)
 
 clean:
-	@rm -rf $(OBJDIR)
+	@rm -f $(OBJS)
+	@rm -rf $(OBJ_DIR)
+	@echo "Cleaning" [ $(NAME) ] "..." $(OK)
 
 fclean: clean
-	rm -rf $(NAME)
+	@rm -f $(NAME)
+	@make -C $(LIB_PATH) fclean
+	@echo "Delete" [ $(NAME) ] $(OK)
 
 re: fclean all
+
+.PHONY: clean all re fclean

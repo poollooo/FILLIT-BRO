@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/10 12:31:11 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/10 13:08:25 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ int		check_last(char *str)
 **
 */
 
-int c(int ac, char **av)
+int check_all(int ac, char **av)
 {
 	int fd;
 	char *buf;

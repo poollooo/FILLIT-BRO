@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/11 14:17:20 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/11 15:25:22 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,28 @@ typedef struct t_tetri
 		struct t_tetri	*next_tetri;
 	}			t_tetri;
 
+
+/*
+** Check_all file :
+*/
 	int		check_shape(char *str);
 	int		check_connections(char *str);
 	int		check_last(char *str);
+	int 	check_all(int ac, char **av);
 
-	t_tetri		coordinator(void);
+	/*
+	** Coordonnees file :
+	*/
+
+	int 			*create_coord(char *tetri_piece);
+	t_tetri		coordonnees(char *av);
+
+	/*
+	** Solve file :
+	*/
+
+	t_map solve(t_tetri tetri);
+
 
 
 #endif

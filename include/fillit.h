@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/11 15:25:22 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/11 22:54:30 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ typedef struct t_tetri
 /*
 ** Check_all file :
 */
+
 	int		check_shape(char *str);
 	int		check_connections(char *str);
 	int		check_last(char *str);

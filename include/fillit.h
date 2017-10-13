@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/11 22:54:30 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/12 15:09:51 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ typedef struct t_tetri
 	*/
 
 	int 			*create_coord(char *tetri_piece);
-	t_tetri		coordonnees(char *av);
+	t_tetri		*coordonnees(char *av);
 
 	/*
 	** Solve file :

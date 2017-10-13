@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:26:55 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/11 23:02:56 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/12 16:52:38 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,32 +33,21 @@ int *create_coord(char *buf)
 	while (buf[i])
 	{
 		i++;
+		if (buf[i] == '\n')
+			j = j + 15 - 4;
 		j++;
 		if (buf[i] == '#')
 		{
 			coord_1[++k] = j;
 		}
-		if (buf[i] == '\n')
-			j = j + 15 - 4;
+
 	}
 	return (coord_1);
 }
 
-int	*ft_intdup(const int *s1)
+t_tetri		*coordonnees(char *av)
 {
-	int	*s2;
-
-	s2 = (int*)malloc(sizeof(int) * (ft_strlen(s1) + 1));
-	if (s2 == NULL)
-		return (NULL);
-	else
-		return (ft_strcpy(s2, s1));
-}
-
-
-t_tetri		coordonnees(char *av)
-{
-	int i;
+	int 	i;
 	int		tetri_num;
 	char	*buf;
 	int		fd;
@@ -66,23 +55,29 @@ t_tetri		coordonnees(char *av)
 
 	tetri_num = 0;
 	i = 0;
-	buf = (char *)malloc(22);
+	buf = (char *)malloc(22 * sizeof(char));
 	fd = open(av, O_RDONLY);
 	while (read(fd, buf, 21) != 0)
 	{
 		tetri_num++;
 		tetris->numero = tetri_num;
-		tetris->coord = ft_intdup(create_coord(buf));
+		// while (i++ < 4)
+			// tetris->coord[i] = create_coord(buf)[i];
 		tetris = tetris->next_tetri;
 	}
-	tetris->next_tetri == NULL;
-	return (t_tetri);
+	tetris->next_tetri = NULL;
+	free(buf);
+	return (tetris);
 }
 
 
 int		main(int ac, char **av)
 {
-	if (check_all(int ac, char **av) == 3)
-		printf("La map est :\n %s", coordonnees(av[1]));
+	int i;
+	i = 0;
+
+	if (check_all(ac, av) == 1)
+		while (coordonnees(av[1])->coord[i++])
+		printf("La map est :\n %d", coordonnees(av[1])->coord[i]);
 	return (0);
 }

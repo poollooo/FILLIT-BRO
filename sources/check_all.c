@@ -6,11 +6,11 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/11 15:25:21 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/12 15:33:17 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "fillit.h"
+#include "../include/fillit.h"
 
 /*
 ** Verifie que les tetriminos ont une bonne shape general et verifie
@@ -76,7 +76,7 @@ int		check_last(char *str)
 {
 	int i;
 
-	printf("%s", str);
+	// printf("%s", str);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
@@ -97,12 +97,9 @@ int check_all(int ac, char **av)
 {
 	int		fd;
 	char	*buf;
-	int		block_nb;
 	char	*str;
-	int		output;
+	int block_nb;
 
-	output = 0;
-	block_nb = 0;
 	if (ac != 2)
 	{
 		printf("usage: fillit input_file\n");
@@ -113,21 +110,21 @@ int check_all(int ac, char **av)
 	** it's valid or not.
 	** O_RDONLY stand for "Open for reading only"
 	*/
+	block_nb = 0;
 	buf = (char *)malloc(22);
 	fd = open(av[1], O_RDONLY);
 	while (read(fd, buf, 21) != 0)
 	{
-		if(check_shape(buf) == 1)
-			output++;
-		if(check_connections(buf) == 1)
-			output++;
+		if(check_shape(buf) == 0)
+			return (0);
+		if(check_connections(buf) == 0)
+			return (0);
 		block_nb++;
 	}
-	output /= block_nb;
 	fd = open(av[1], O_RDONLY);
 	str = (char *)malloc(22 * block_nb);
 	read(fd, str, 21 * block_nb);
 	if (check_last(str) == 0)
-		output++;
-	return (output);
+		return (0);
+	return (1);
 }

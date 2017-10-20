@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/12 15:33:17 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/18 15:57:56 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,15 +53,15 @@ int		check_connections(char *str)
 	connections =0 ;
 	while (str[i])
 	{
-		if(str[i] == '#')
+		if (str[i] == '#')
 		{
-			if(str[i + 1] && str[i + 1] == '#')
+			if (str[i + 1] && str[i + 1] == '#')
 				connections++;
-			if(str[i - 1] && str[i - 1] == '#')
+			if (str[i - 1] && str[i - 1] == '#')
 				connections++;
-			if(str[i + 5] && str[i + 5] == '#')
+			if (str[i + 5] && str[i + 5] == '#')
 				connections++;
-			if(str[i - 5] && str[i - 5] == '#')
+			if (str[i - 5] && str[i - 5] == '#')
 				connections++;
 		}
 		i++;
@@ -93,20 +93,15 @@ int		check_last(char *str)
 **
 */
 
-int check_all(int ac, char **av)
+int check_all(char **av)
 {
 	int		fd;
 	char	*buf;
 	char	*str;
 	int block_nb;
 
-	if (ac != 2)
-	{
-		printf("usage: fillit input_file\n");
-		return (1);
-	}
 	/*
-	** read_tetri is the function that will read the tetris pieces and checks if
+	** read_tetris is the function that will read the tetris pieces and checks if
 	** it's valid or not.
 	** O_RDONLY stand for "Open for reading only"
 	*/
@@ -115,16 +110,21 @@ int check_all(int ac, char **av)
 	fd = open(av[1], O_RDONLY);
 	while (read(fd, buf, 21) != 0)
 	{
-		if(check_shape(buf) == 0)
+		if (check_shape(buf) == 0)
 			return (0);
-		if(check_connections(buf) == 0)
+		if (check_connections(buf) == 0)
 			return (0);
 		block_nb++;
 	}
+	free(buf);
 	fd = open(av[1], O_RDONLY);
 	str = (char *)malloc(22 * block_nb);
 	read(fd, str, 21 * block_nb);
 	if (check_last(str) == 0)
+	{
+		free(str);
 		return (0);
-	return (1);
+	}
+	free(str);
+	return (block_nb);
 }

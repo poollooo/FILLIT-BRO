@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/12 15:09:51 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/18 16:32:43 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ typedef struct t_map
 		char map_letters[196];
 	}			t_map;
 
-typedef struct t_tetri
+typedef struct t_tetris
 	{
 		int numero;
 		int coord[4];
-		struct t_tetri	*next_tetri;
-	}			t_tetri;
+		struct t_tetris	*next;
+	}			t_tetris;
 
 
 /*
@@ -41,20 +41,25 @@ typedef struct t_tetri
 	int		check_shape(char *str);
 	int		check_connections(char *str);
 	int		check_last(char *str);
-	int 	check_all(int ac, char **av);
+	int 	check_all(char **av);
+	int		*coordinates(char *av, int block_nb);
+	int		find_min(int *map);
+	int		*assign_spot(int *map, int *tet);
+	int		ft_success(int *map, int *tet);
+	int		*adjust_map(int *map, int *tetris);
 
 	/*
 	** Coordonnees file :
 	*/
 
-	int 			*create_coord(char *tetri_piece);
-	t_tetri		*coordonnees(char *av);
+	int 			*create_coord(char *buf, int block_nb);
+	t_tetris		*coordonnees(char *av);
 
 	/*
 	** Solve file :
 	*/
 
-	t_map solve(t_tetri tetri);
+	t_map solve(t_tetris tetris);
 
 
 

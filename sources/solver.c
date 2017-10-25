@@ -1,14 +1,15 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   solve.c                                            :+:      :+:    :+:   */
+/*   solver.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/10/04 19:27:13 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/25 16:15:12 by jostraye         ###   ########.fr       */
+/*   Created: 2017/10/25 14:53:13 by jostraye          #+#    #+#             */
+/*   Updated: 2017/10/25 16:25:24 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../include/fillit.h"
 
@@ -114,90 +115,58 @@ char *success(char **map, char **tr, int tr_n, char *spot)
 	return (spot);
 }
 
-char *find_spot(char **map, int tr_n)
-{
-	int i;
-	int j;
-	static char spot[3];
-
-	i = 0;
-	j = 0;
-	while (map[j] && j < size(map))
-	{
-		i = 0;
-		while (map[j][i] != (tr_n + 'A')  && i < size(map))
-			i++;
-		j++;
-	}
-	j--;
-	if (i == size(map))
-		i = 0;
-	if (j == size(map))
-		j = 0;
-	spot[0] = i;
-	spot[1] = j;
-	printf("\n FIND SPOT RESULT : %d %d \n", spot[0], spot[1]);
-
-	return (spot);
-}
-
 char	**solve(char **map, char **tetris, 	int tr_n, char *spot)
 {
 	printf("\n *****SOLVE***** \n");
 
 	int map_s;
 	int i;
+	int max_letter;
 	i = 0;
 	map_s = size(map);
 	spot = success(map, tetris, tr_n, spot);
-	printf("---- TETRIS NUMBER ---- %d \n", tr_n);
-	printf("\n ***spot to print*** : %d %d \n", spot[0], spot[1]);
+	printf(" TETRIS NUMBER  %d \n", tr_n);
+	printf("\n ************ spot out of success function ************ : %d %d \n\n", spot[0], spot[1]);
 
-	if ((spot[0] == map_s || spot[1] == map_s) && tr_n == 0)
+	if ((spot[0] == map_s || spot[1] == map_s))
 	{
-		printf("HELLO FRANKY////////////////////////////");
-		spot[0] = 0;
-		spot[1] = 0;
-		map_s++;
-		tr_n = 0;
-		printf("---- TETRIS NUMBER ---- %d \n", tr_n);
-		printf("map_s set to %d \n", map_s);
-		map = initiate_map(map_s);
-		printf("Max letter == %d\n", find_max_letter(map));
+		max_letter = find_max_letter(map);
+		printf("max letter %d \n", find_max_letter(map));
+		printf("success spot bigger than map \n");
+		if (max_letter == '.')
+		{
+			printf("no tetris on map \n");
+			map_s++;
+			map = initiate_map(map_s);
+			spot = reset_spot();
+			tr_n = 0;
+		}
+		else if (max_letter != '.')
+		{
 
-
+			tr_n = max_letter - 65;
+			printf("tetris %d deleted from map \n", tr_n);
+			spot = find_first_spot(map, max_letter);
+			printf("\n first spot of the letter : %d %d \n", spot[0], spot[1]);
+			spot = next_spot(spot, map_s);
+			printf("\n ***next spot to print*** : %d %d \n", spot[0], spot[1]);
+			map = free_map(map, max_letter);
+		}
 	}
-	else if ((spot[0] == map_s || spot[1] == map_s) && tr_n > 0)
-	{
-		tr_n--;
-		spot = next_spot(find_spot(map, tr_n), tr_n);
-		printf("\n ***spot to print*** : %d %d \n", spot[0], spot[1]);
-		map = initiate_map(map_s);
-		printf("Max letter == %d\n", find_max_letter(map));
-
-	}
-
 	else
 	{
-		i = 0;
-		printf("\n spot to print : %d %d \n", spot[0], spot[1]);
+		printf("tetris %d written on map \n", tr_n);
 		map = fill_map(map, tetris, tr_n, spot);
+		spot = reset_spot();
 		tr_n++;
-
-		printf("Max letter == %d\n", find_max_letter(map));
-		spot[0] = 0;
-		spot[1] = 0;
 	}
-
 	print_map(map, map_s);
-	printf(" FREED MAP \n");
-	// map = free_map(map, find_max_letter(map));
-	// print_map(map, map_s);
 
-	printf("END OF SOLVE - GO TETRIS %d \n\n", tr_n);
-
+	printf("checking if tetris %d is the last \n", tr_n);
 	if (tetris[tr_n] == NULL)
 		return (map);
-	solve(map, tetris, tr_n, spot, previous_tr_n);
+	printf("solving tetris %d \n", tr_n);
+	if (tetris[tr_n] != NULL)
+		solve(map, tetris, tr_n, spot);
 	return (map);
 }

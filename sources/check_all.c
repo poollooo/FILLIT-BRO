@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/18 15:57:56 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/22 19:38:34 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,10 @@ int		check_shape(char *str)
 			k++;
 		i++;
 	}
-	if ((str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n')
-	|| (str[20] != '\0' && str[20] != '\n'))
+
+	if ((str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n'))
 		return (0);
+
 	if (j != 4 || k != 12)
 		return (0);
 	else
@@ -76,7 +77,6 @@ int		check_last(char *str)
 {
 	int i;
 
-	// printf("%s", str);
 	i = 0;
 	while (str[i] != '\0')
 		i++;
@@ -93,7 +93,7 @@ int		check_last(char *str)
 **
 */
 
-int check_all(char **av)
+int check_all(char *av)
 {
 	int		fd;
 	char	*buf;
@@ -106,8 +106,9 @@ int check_all(char **av)
 	** O_RDONLY stand for "Open for reading only"
 	*/
 	block_nb = 0;
+
 	buf = (char *)malloc(22);
-	fd = open(av[1], O_RDONLY);
+	fd = open(av, O_RDONLY);
 	while (read(fd, buf, 21) != 0)
 	{
 		if (check_shape(buf) == 0)
@@ -115,16 +116,17 @@ int check_all(char **av)
 		if (check_connections(buf) == 0)
 			return (0);
 		block_nb++;
+
 	}
-	free(buf);
-	fd = open(av[1], O_RDONLY);
+	// free(buf);
+	fd = open(av, O_RDONLY);
 	str = (char *)malloc(22 * block_nb);
 	read(fd, str, 21 * block_nb);
 	if (check_last(str) == 0)
 	{
-		free(str);
+		// free(str);
 		return (0);
 	}
-	free(str);
-	return (block_nb);
+	// free(str);
+	return (block_nb );
 }

@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/18 16:32:43 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/25 16:20:23 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@
 # include <fcntl.h>
 # include "../libft/libft.h"
 
-typedef struct t_map
-	{
-		int map_distance[196];
-		char map_letters[196];
-	}			t_map;
-
-typedef struct t_tetris
-	{
-		int numero;
-		int coord[4];
-		struct t_tetris	*next;
-	}			t_tetris;
-
-
 /*
 ** Check_all file :
 */
@@ -41,25 +27,35 @@ typedef struct t_tetris
 	int		check_shape(char *str);
 	int		check_connections(char *str);
 	int		check_last(char *str);
-	int 	check_all(char **av);
-	int		*coordinates(char *av, int block_nb);
+	int		check_all(char *av);
+	char	**coordinates(char *av, int block_nb);
 	int		find_min(int *map);
 	int		*assign_spot(int *map, int *tet);
 	int		ft_success(int *map, int *tet);
 	int		*adjust_map(int *map, int *tetris);
-
+	char	**initiate_map(int map_size);
 	/*
 	** Coordonnees file :
 	*/
-
-	int 			*create_coord(char *buf, int block_nb);
-	t_tetris		*coordonnees(char *av);
+	char	*create_coord(char *buf);
+	void	print_map(char **map, int map_size);
 
 	/*
 	** Solve file :
 	*/
+	int		size(char **map);
+	char	**solve(char **map, char **tetris, 	int tetris_nb, char *spot);
 
-	t_map solve(t_tetris tetris);
+	/*
+	** Algo_tool file :
+	*/
+
+	char 	*reset_spot();
+	int		find_max_letter(char **map);
+	char	*find_first_spot(char **map, int max_letter);
+	char	**free_map(char **map, int max_letter);
+	char	**fill_map(char **map, char **tetris, int tr_n, char *spot);
+
 
 
 

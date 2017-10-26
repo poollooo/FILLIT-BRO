@@ -6,7 +6,7 @@
 #    By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/04 18:26:07 by pnizet            #+#    #+#              #
-#    Updated: 2017/10/25 14:14:22 by jostraye         ###   ########.fr        #
+#    Updated: 2017/10/26 02:03:45 by pnizet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,10 +23,11 @@ INCS			=	-I $(LIB_PATH)/$(INC_DIR) -I $(INC_DIR)
 
 SRC_DIR			=	sources
 SRC_BASE		= main.c \
-					map.c \
-					reader.c \
-					solver.c\
-					tetrimino.c
+					algoo_tool.c \
+					algoo_tool_2.0.c \
+					check_all.c \
+					coordinates.c \
+					solver.c
 
 OBJ_DIR			=	obj
 

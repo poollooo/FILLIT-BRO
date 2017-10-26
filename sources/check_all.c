@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/22 19:38:34 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/26 00:45:55 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int		check_shape(char *str)
 	j = 0;
 	k = 0;
 	i = 0;
-
 	while (str[i])
 	{
 		if (str[i] == '#')
@@ -35,10 +34,9 @@ int		check_shape(char *str)
 			k++;
 		i++;
 	}
-
-	if ((str[4] != '\n' || str[9] != '\n' || str[14] != '\n' || str[19] != '\n'))
+	if ((str[4] != '\n' || str[9] != '\n'
+	|| str[14] != '\n' || str[19] != '\n'))
 		return (0);
-
 	if (j != 4 || k != 12)
 		return (0);
 	else
@@ -51,7 +49,7 @@ int		check_connections(char *str)
 	int connections;
 
 	i = 0;
-	connections =0 ;
+	connections = 0;
 	while (str[i])
 	{
 		if (str[i] == '#')
@@ -84,29 +82,20 @@ int		check_last(char *str)
 		return (1);
 	else
 		return (0);
-
 }
-
 
 /*
 ** Change the main in a runable function to use in our Main.c
-**
 */
 
-int check_all(char *av)
+int		check_all(char *av)
 {
 	int		fd;
 	char	*buf;
 	char	*str;
-	int block_nb;
+	int		block_nb;
 
-	/*
-	** read_tetris is the function that will read the tetris pieces and checks if
-	** it's valid or not.
-	** O_RDONLY stand for "Open for reading only"
-	*/
 	block_nb = 0;
-
 	buf = (char *)malloc(22);
 	fd = open(av, O_RDONLY);
 	while (read(fd, buf, 21) != 0)
@@ -116,17 +105,11 @@ int check_all(char *av)
 		if (check_connections(buf) == 0)
 			return (0);
 		block_nb++;
-
 	}
-	// free(buf);
 	fd = open(av, O_RDONLY);
 	str = (char *)malloc(22 * block_nb);
 	read(fd, str, 21 * block_nb);
 	if (check_last(str) == 0)
-	{
-		// free(str);
 		return (0);
-	}
-	// free(str);
-	return (block_nb );
+	return (block_nb);
 }

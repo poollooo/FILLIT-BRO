@@ -6,17 +6,16 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 14:53:13 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/25 23:33:25 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/26 01:06:50 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../include/fillit.h"
 
 void	print_map(char **map, int map_s)
 {
-	int i;
-	int j;
+	int		i;
+	int		j;
 
 	i = 0;
 	j = 0;
@@ -34,7 +33,7 @@ void	print_map(char **map, int map_s)
 	printf("\n");
 }
 
-char *next_spot(char *spot, int map_s)
+char	*next_spot(char *spot, int map_s)
 {
 	static char	next_spot[2];
 	int			i;
@@ -59,13 +58,12 @@ char *next_spot(char *spot, int map_s)
 		i--;
 		j++;
 	}
-
 	next_spot[0] = i;
 	next_spot[1] = j;
 	return (next_spot);
 }
 
-int size(char **map)
+int		size(char **map)
 {
 	int i;
 
@@ -75,7 +73,7 @@ int size(char **map)
 	return (i);
 }
 
-char *success(char **map, char **tr, int tr_n, char *spot)
+char	*success(char **map, char **tr, int tr_n, char *spot)
 {
 	int i;
 	int map_s;
@@ -89,40 +87,33 @@ char *success(char **map, char **tr, int tr_n, char *spot)
 			if (tr[tr_n][i] + spot[0] < 0 || tr[tr_n][i] + spot[0] >= map_s
 		|| tr[tr_n][i + 1] + spot[1] < 0 || tr[tr_n][i + 1] + spot[1] >= map_s
 	|| map[tr[tr_n][i + 1] + spot[1]][tr[tr_n][i] + spot[0]] != '.')
-				{
-					break;
-				}
+			{
+				break ;
+			}
 			i = i + 2;
 		}
 		if (i == 8)
-		{
 			return (spot);
-		}
 		spot = next_spot(spot, map_s);
-
 	}
 	return (spot);
 }
 
-char	**solve(char **map, char **tetris, 	int tr_n, char *spot, int j)
+char	**solve(char **map, char **tetris, int tr_n, char *spot, int j)
 {
-	int map_s;
-	int i;
-	int max_letter;
+	int		map_s;
+	int		i;
+	int		max_letter;
 
 	if (tetris[tr_n] == NULL)
 		return (map);
-
 	i = 0;
 	map_s = size(map);
 	printf("map size %d \n", map_s);
-
 	j++;
 	printf("ceci est j %d \n", j);
-
 	spot = success(map, tetris, tr_n, spot);
 	max_letter = find_max_letter(map);
-
 	if ((spot[0] == map_s || spot[1] == map_s))
 	{
 		if (max_letter == '.' || count_dots(map) < 4)
@@ -134,12 +125,10 @@ char	**solve(char **map, char **tetris, 	int tr_n, char *spot, int j)
 		}
 		else if (max_letter != '.')
 		{
-
 			tr_n = max_letter - 65;
 			spot = find_first_spot(map, max_letter);
 			spot = next_spot(spot, map_s);
 			map = free_map(map, max_letter);
-
 		}
 	}
 	else
@@ -149,7 +138,6 @@ char	**solve(char **map, char **tetris, 	int tr_n, char *spot, int j)
 		tr_n++;
 	}
 	print_map(map, map_s);
-
 	if (tetris[tr_n] != NULL)
 		solve(map, tetris, tr_n, spot, j);
 	return (map);

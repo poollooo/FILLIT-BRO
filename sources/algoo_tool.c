@@ -6,48 +6,16 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:42:50 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/25 23:12:12 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/26 01:47:01 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fillit.h"
 
-char *reset_spot()
+char	*find_first_spot(char **map, int max_letter)
 {
-	static char spot[2];
-
-
-	spot[0] = 0;
-	spot [1] = 0;
-	return (spot);
-}
-
-int		find_max_letter(char **map)
-{
-	int i;
-	int j;
-	int max;
-
-	i = 0;
-	max = 0;
-	while (map[i])
-	{
-		j = 0;
-		while (map[i][j])
-		{
-			if (map[i][j] > max)
-				max = map[i][j];
-			j++;
-		}
-		i++;
-	}
-	return (max);
-}
-
-char *find_first_spot(char **map, int max_letter)
-{
-	int j;
-	int i;
+	int					j;
+	int					i;
 	static char spot[2];
 
 	i = 0;
@@ -58,14 +26,15 @@ char *find_first_spot(char **map, int max_letter)
 		while (map[j][i] != (char)max_letter && map[j][i])
 			i++;
 		if (map[j][i] == max_letter)
-			break;
+			break ;
 		j++;
 	}
 	spot[0] = i;
 	spot[1] = j;
 	return (spot);
 }
-int count_dots(char **map)
+
+int		count_dots(char **map)
 {
 	int i;
 	int j;
@@ -86,6 +55,7 @@ int count_dots(char **map)
 	}
 	return (k);
 }
+
 char	**free_map(char **map, int max_letter)
 {
 	int i;
@@ -106,7 +76,7 @@ char	**free_map(char **map, int max_letter)
 	return (map);
 }
 
-int min_map_size(int tetris_nb)
+int		min_map_size(int tetris_nb)
 {
 	int i;
 
@@ -135,7 +105,7 @@ int min_map_size(int tetris_nb)
 		return (0);
 }
 
-char **fill_map(char **map, char **tetris, int tr_n, char *spot)
+char	**fill_map(char **map, char **tetris, int tr_n, char *spot)
 {
 	int i;
 

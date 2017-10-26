@@ -6,33 +6,27 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/14 23:35:17 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/22 21:53:24 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/26 01:05:35 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fillit.h"
 
-/* The idea is to create a recursive function that will lead to writting the
-last tetris first, calling back to the first one */
-
-
 char	*create_coord(char *buf)
 {
-	int i;
-	int j;
-	int k;
-	int l;
-	char *tetris;
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	char	*tetris;
 
 	tetris = (char *)ft_strnew((sizeof(char) * 9));
 	l = 0;
 	i = 0;
 	j = 0;
 	k = 0;
-
 	while (buf[l] != '#')
 		l++;
-
 	while (buf[l])
 	{
 		if (buf[l] == '#')
@@ -49,23 +43,20 @@ char	*create_coord(char *buf)
 		}
 		l++;
 		i++;
-
-
 	}
 	tetris[++k] = '%';
-
 	return (tetris);
 }
 
 char	**read_input(char *av, int block_nb)
 {
-	int 	i;
+	int		i;
 	char	*buf;
 	int		fd;
-	char **tetris;
+	char	**tetris;
+
 	tetris = (char **)ft_strnew((sizeof(char *) * block_nb) + 1);
 	i = 0;
-
 	buf = (char *)malloc(22 * sizeof(char));
 	fd = open(av, O_RDONLY);
 	while (read(fd, buf, 21) != 0)
@@ -86,6 +77,5 @@ char	**coordinates(char *av, int block_nb)
 	if (tetris == NULL)
 		return (0);
 	tetris = read_input(av, block_nb);
-
 	return (tetris);
 }

@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/25 16:20:23 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/25 22:59:05 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,17 +44,18 @@
 	** Solve file :
 	*/
 	int		size(char **map);
-	char	**solve(char **map, char **tetris, 	int tetris_nb, char *spot);
+	char	**solve(char **map, char **tetris, 	int tetris_nb, char *spot, int i);
 
 	/*
 	** Algo_tool file :
 	*/
-
+	int		count_dots(char **map);
 	char 	*reset_spot();
 	int		find_max_letter(char **map);
 	char	*find_first_spot(char **map, int max_letter);
 	char	**free_map(char **map, int max_letter);
 	char	**fill_map(char **map, char **tetris, int tr_n, char *spot);
+	int		min_map_size(int tetris_nb);
 
 
 

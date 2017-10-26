@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:26:13 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/25 16:20:13 by jostraye         ###   ########.fr       */
+/*   Updated: 2017/10/25 23:24:30 by jostraye         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,18 @@ int		main(int ac, char **av)
 	int tetris_nb;
 	char **map;
 	int i;
-	char spot[3];
+	char spot[2];
+	int j;
 
+
+	j = 0;
+	i = 0;
 	spot[0] = 0;
 	spot[1] = 0;
+	tetris_nb = check_all(av[1]);
+	i = min_map_size(tetris_nb);
+
 	tetris_nb = 0;
-	i = 2;
 	if (ac != 2)
 	{
 		printf("usage: fillit input_file\n");
@@ -91,6 +97,7 @@ int		main(int ac, char **av)
 	map = initiate_map(i);
 	print_map(initiate_map(i), i);
 	print_tetris(coordinates(av[1], check_all(av[1])));
-	solve(map, coordinates(av[1], check_all(av[1])), tetris_nb, spot);
+	solve(map, coordinates(av[1], check_all(av[1])), tetris_nb, spot, j);
+	printf("I EST EGALE A : %d\n", i);
 	return (0);
 }

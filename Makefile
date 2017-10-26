@@ -6,71 +6,33 @@
 #    By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/10/04 18:26:07 by pnizet            #+#    #+#              #
-#    Updated: 2017/10/26 02:03:45 by pnizet           ###   ########.fr        #
+#    Updated: 2017/10/26 15:27:24 by pnizet           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				=	gcc
-NAME			=	fillit
-FLAGS			=	-Wall -Wextra -Werror
+NAME = fillit
 
-LIB_PATH		=	libft
-LIB				=	$(LIB_PATH)/libft.a
-LIB_LINK		=	-L $(LIB_PATH) -lft
+FLAGS = -Wall -Wextra -Werror
 
-INC_DIR			=	include
-INCS			=	-I $(LIB_PATH)/$(INC_DIR) -I $(INC_DIR)
+FILES += 	sources/algoo_tool.c \
+					sources/algoo_tool_2.0.c \
+					sources/check_all.c \
+					sources/coordinates.c \
+					sources/main.c \
+					sources/solver.c \
+					sources/libft.c \
+					sources/libft_2.c
 
-SRC_DIR			=	sources
-SRC_BASE		= main.c \
-					algoo_tool.c \
-					algoo_tool_2.0.c \
-					check_all.c \
-					coordinates.c \
-					solver.c
+all: $(NAME)
 
-OBJ_DIR			=	obj
-
-SRCS			=	$(addprefix $(SRC_DIR)/, $(SRC_BASE))
-OBJS			=	$(addprefix $(OBJ_DIR)/, $(SRC_BASE:.c=.o))
-
-# COLORS
-C_NO			=	"\033[00m"
-C_OK			=	"\033[35m"
-C_GOOD			=	"\033[32m"
-C_ERROR			=	"\033[31m"
-C_WARN			=	"\033[33m"
-
-# DBG MESSAGE
-SUCCESS			=	$(C_GOOD)SUCCESS$(C_NO)
-OK				=	$(C_OK)OK$(C_NO)
-
-all: obj $(NAME)
-
-$(NAME): $(LIB) $(OBJS)
-	@$(CC) $(FLAGS) -o $@ $^ $(LIB_LINK)
-	@echo "Compiling" [ $(NAME) ] $(SUCCESS)
-
-$(LIB):
-	@make -C $(LIB_PATH)
-
-obj:
-	@mkdir -p obj
-
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(INC_DIR)/*.h
-	@$(CC) $(FLAGS) $(INCS) -c -o $@ $<
-	@echo "Linking" [ $< ] $(OK)
+$(NAME):
+	gcc $(FLAGS) -c $(FILES)
+	gcc -o $(NAME) *.o
 
 clean:
-	@rm -f $(OBJS)
-	@rm -rf $(OBJ_DIR)
-	@echo "Cleaning" [ $(NAME) ] "..." $(OK)
+	rm -rf *.o
 
 fclean: clean
-	@rm -f $(NAME)
-	@make -C $(LIB_PATH) fclean
-	@echo "Delete" [ $(NAME) ] $(OK)
+	rm -rf fillit
 
 re: fclean all
-
-.PHONY: clean all re fclean

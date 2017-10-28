@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/09 18:02:34 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/26 01:40:42 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 18:13:05 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ int		*adjust_map(int *map, int *tetris);
 char	**initiate_map(int map_size);
 
 char	*create_coord(char *buf);
-void	print_map(char **map, int map_size);
+char	**print_map(char **map, int map_size);
 
 int		size(char **map);
-char	**solve(char **map, char **tetris, int tetris_nb, char *spot, int i);
+char	**solve(char **map, char **tetris, int tetris_nb, char *spot);
 
-int		count_dots(char **map);
+int		cd(char **map);
 char	*reset_spot();
-int		find_max_letter(char **map);
+int		fml(char **map);
 char	*find_first_spot(char **map, int max_letter);
 char	**free_map(char **map, int max_letter);
 char	**fill_map(char **map, char **tetris, int tr_n, char *spot);

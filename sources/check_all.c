@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:30:41 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/26 00:45:55 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 18:09:33 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,12 +94,15 @@ int		check_all(char *av)
 	char	*buf;
 	char	*str;
 	int		block_nb;
+	int		rea;
 
 	block_nb = 0;
 	buf = (char *)malloc(22);
 	fd = open(av, O_RDONLY);
-	while (read(fd, buf, 21) != 0)
+	while ((rea = read(fd, buf, 21)) != 0)
 	{
+		if (rea != 21 && rea != 20)
+			return (0);
 		if (check_shape(buf) == 0)
 			return (0);
 		if (check_connections(buf) == 0)

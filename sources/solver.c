@@ -6,13 +6,13 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 14:53:13 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/26 01:06:50 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 18:15:58 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fillit.h"
 
-void	print_map(char **map, int map_s)
+char	**print_map(char **map, int map_s)
 {
 	int		i;
 	int		j;
@@ -21,46 +21,24 @@ void	print_map(char **map, int map_s)
 	j = 0;
 	while (j < map_s)
 	{
-		while (i < map_s)
-		{
-			printf("%c ", map[j][i]);
-			i++;
-		}
-		printf("\n");
-		i = 0;
+		ft_putstr(map[j]);
 		j++;
+		ft_putstr("\n");
 	}
-	printf("\n");
+	ft_putstr("\n");
+	return (map);
 }
 
 char	*next_spot(char *spot, int map_s)
 {
-	static char	next_spot[2];
-	int			i;
-	int			j;
-	int			k;
-
-	i = spot[0];
-	j = spot[1];
-	if (j == map_s - 1)
+	if (spot[0] < map_s)
+		spot[0]++;
+	if (spot[0] == map_s)
 	{
-		k = i;
-		i = j;
-		j = k + 1;
+		spot[0] = 0;
+		spot[1]++;
 	}
-	else if (i == 0)
-	{
-		i = j + 1;
-		j = 0;
-	}
-	else
-	{
-		i--;
-		j++;
-	}
-	next_spot[0] = i;
-	next_spot[1] = j;
-	return (next_spot);
+	return (spot);
 }
 
 int		size(char **map)
@@ -99,46 +77,31 @@ char	*success(char **map, char **tr, int tr_n, char *spot)
 	return (spot);
 }
 
-char	**solve(char **map, char **tetris, int tr_n, char *spot, int j)
+char	**solve(char **mp, char **tetris, int tr_n, char *spot)
 {
-	int		map_s;
-	int		i;
-	int		max_letter;
-
 	if (tetris[tr_n] == NULL)
-		return (map);
-	i = 0;
-	map_s = size(map);
-	printf("map size %d \n", map_s);
-	j++;
-	printf("ceci est j %d \n", j);
-	spot = success(map, tetris, tr_n, spot);
-	max_letter = find_max_letter(map);
-	if ((spot[0] == map_s || spot[1] == map_s))
+		return (print_map(mp, size(mp)));
+	spot = success(mp, tetris, tr_n, spot);
+	if ((spot[0] == size(mp) || spot[1] == size(mp))
+	&& (fml(mp) == '.' || cd(mp) < 4))
 	{
-		if (max_letter == '.' || count_dots(map) < 4)
-		{
-			map_s++;
-			map = initiate_map(map_s);
-			spot = reset_spot();
-			tr_n = 0;
-		}
-		else if (max_letter != '.')
-		{
-			tr_n = max_letter - 65;
-			spot = find_first_spot(map, max_letter);
-			spot = next_spot(spot, map_s);
-			map = free_map(map, max_letter);
-		}
+		mp = initiate_map(size(mp) + 1);
+		spot = reset_spot();
+		tr_n = 0;
+	}
+	else if ((spot[0] == size(mp) || spot[1] == size(mp)) && fml(mp) != '.')
+	{
+		tr_n = fml(mp) - 65;
+		spot = find_first_spot(mp, fml(mp));
+		spot = next_spot(spot, size(mp));
+		mp = free_map(mp, fml(mp));
 	}
 	else
 	{
-		map = fill_map(map, tetris, tr_n, spot);
+		mp = fill_map(mp, tetris, tr_n, spot);
 		spot = reset_spot();
 		tr_n++;
 	}
-	print_map(map, map_s);
-	if (tetris[tr_n] != NULL)
-		solve(map, tetris, tr_n, spot, j);
-	return (map);
+	solve(mp, tetris, tr_n, spot);
+	return (mp);
 }

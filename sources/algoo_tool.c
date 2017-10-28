@@ -6,7 +6,7 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/25 11:42:50 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/26 01:47:01 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 17:59:57 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 char	*find_first_spot(char **map, int max_letter)
 {
-	int					j;
-	int					i;
-	static char spot[2];
+	int			j;
+	int			i;
+	static char	spot[2];
 
 	i = 0;
 	j = 0;
@@ -34,7 +34,7 @@ char	*find_first_spot(char **map, int max_letter)
 	return (spot);
 }
 
-int		count_dots(char **map)
+int		cd(char **map)
 {
 	int i;
 	int j;
@@ -112,7 +112,8 @@ char	**fill_map(char **map, char **tetris, int tr_n, char *spot)
 	i = 0;
 	while (i < 8)
 	{
-		map[tetris[tr_n][i + 1] + spot[1]][tetris[tr_n][i] + spot[0]] = tr_n + 'A';
+		map[tetris[tr_n][i + 1] + spot[1]]
+		[tetris[tr_n][i] + spot[0]] = tr_n + 'A';
 		i = i + 2;
 	}
 	return (map);

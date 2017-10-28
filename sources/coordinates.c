@@ -6,45 +6,47 @@
 /*   By: jostraye <jostraye@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/14 23:35:17 by jostraye          #+#    #+#             */
-/*   Updated: 2017/10/26 01:05:35 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 13:36:35 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/fillit.h"
 
+int		skip_dot(char *buf)
+{
+	int l;
+
+	l = 0;
+	while (buf[l] != '#')
+		l++;
+	return (l);
+}
+
 char	*create_coord(char *buf)
 {
-	int		i;
-	int		j;
-	int		k;
-	int		l;
+	int		i[4];
 	char	*tetris;
 
 	tetris = (char *)ft_strnew((sizeof(char) * 9));
-	l = 0;
-	i = 0;
-	j = 0;
-	k = 0;
-	while (buf[l] != '#')
-		l++;
-	while (buf[l])
+	i[1] = 0;
+	i[2] = 0;
+	i[3] = 0;
+	i[0] = skip_dot(buf);
+	while (buf[i[0]])
 	{
-		if (buf[l] == '#')
+		if (buf[i[0]] == '#')
 		{
-			tetris[k] = i;
-			k++;
-			tetris[k] = j;
-			k++;
+			tetris[i[3]++] = i[1];
+			tetris[i[3]++] = i[2];
 		}
-		if (buf[l] == '\n' && buf[l - 1] != '\n')
+		if (buf[i[0]] == '\n' && buf[i[0] - 1] != '\n')
 		{
-			j++;
-			i = i - 5;
+			i[2]++;
+			i[1] = i[1] - 5;
 		}
-		l++;
-		i++;
+		i[0]++;
+		i[1]++;
 	}
-	tetris[++k] = '%';
 	return (tetris);
 }
 

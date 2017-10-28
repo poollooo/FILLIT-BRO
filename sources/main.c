@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/04 19:26:13 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/26 00:45:17 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 18:07:03 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,6 @@
 ** Main function, where we will use all our functions to solve the fillit
 ** problem.
 */
-
-void	print_tetris(char **tetris)
-{
-	int i;
-	int j;
-
-	j = 0;
-	i = 0;
-	while (tetris[i] != '\0')
-	{
-		printf("numero du block : %d \n", i);
-		j = 0;
-		while (j < 8)
-			printf("%d ", tetris[i][j++]);
-		printf("\n");
-		i++;
-	}
-	printf("\n");
-}
 
 char	**initiate_map(int map_size)
 {
@@ -66,26 +47,24 @@ int		main(int ac, char **av)
 	char	**map;
 	int		i;
 	char	spot[2];
-	int		j;
 
-	j = 0;
-	i = 0;
-	spot[0] = 0;
-	spot[1] = 0;
-	tetris_nb = check_all(av[1]);
-	i = min_map_size(tetris_nb);
-	tetris_nb = 0;
 	if (ac != 2)
 	{
 		ft_putstr("usage: fillit input_file\n");
 		return (1);
 	}
 	if (check_all(av[1]) == 0)
+	{
+		ft_putstr("error\n");
 		return (0);
+	}
+	i = 0;
+	spot[0] = 0;
+	spot[1] = 0;
+	tetris_nb = check_all(av[1]);
+	i = min_map_size(tetris_nb);
+	tetris_nb = 0;
 	map = initiate_map(i);
-	print_map(initiate_map(i), i);
-	print_tetris(coordinates(av[1], check_all(av[1])));
-	solve(map, coordinates(av[1], check_all(av[1])), tetris_nb, spot, j);
-	printf("I EST EGALE A : %d\n", i); //REMOVE THIS PRINT AND THIS FUNCTIONS IS GOOD
+	solve(map, coordinates(av[1], check_all(av[1])), tetris_nb, spot);
 	return (0);
 }

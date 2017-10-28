@@ -6,7 +6,7 @@
 /*   By: pnizet <pnizet@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/10/26 00:59:05 by pnizet            #+#    #+#             */
-/*   Updated: 2017/10/26 01:02:25 by pnizet           ###   ########.fr       */
+/*   Updated: 2017/10/27 18:00:09 by pnizet           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ char	*reset_spot(void)
 	return (spot);
 }
 
-int		find_max_letter(char **map)
+int		fml(char **map)
 {
 	int i;
 	int j;
